@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/form.css">
+    <title>Форма</title>
+    <style>
+        .error {
+        color: red;
+        display: none;
+        }
+        </style>
+</head>
+<p>Используя JavaScript, добавьте обработчик события отправки формы (submit), который будет выполнять следующие действия:
+
+Отменять действие по умолчанию для события submit
+Отображать сообщение об ошибке рядом с каждым полем при обнаружении ошибки валидации
+Кнопка отправки должна быть неактивна (disabled), пока все поля формы не будут правильно заполнены и не будет отмечен чекбокс согласия с условиями
+Если форма проходит проверку валидности, выводите в консоль значения полей формы и очищайте форму
+Бонусное задание: реализуйте дополнительные обработчики событий focus и blur для каждого поля</p>
+<body class="body">
+
+    <div class="form">
+    <form name="myForm" id="mars-once" action="/apply/" method="POST">
+    <div class="name">
+    <label>Ваше имя: 
+    <br><input type="text" name="username" id="username" class="input-field" placeholder="Ваше Имя" pattern="^[А-яа-я ]+$" minlength="2" maxlength="50" required ></label>
+    <span class="error" id="usernameError" ></span>
+</div>
+
+    <div class="email">
+    <label>Почта: <br>
+    <input type="email" name="email" id="email" class="input-field" placeholder="email" required ></label>
+    <span class="error" id="emailError"></span>
+    </div>
+
+    <div class="age">  
+    <label>Возраст: <br><input type="number" name="age" class="input-field" required></label>
+    </div>
+
+    <div class="prof"><label >
+            Профессия:
+            <br><select name="specialization" class="input-field"  required>
+            <option value="engineer"class=rt selected>Инженер</option>
+            <option value="scientist">Учёный</option>
+            <option value="psychologist">Психолог</option>
+            <option value="teacher">Учитель</option>
+            <option value="rt">Продавец-rjycekmnfyn           </option>
+            <option value="other">Другая</option>
+            </select>
+        </label></div>
+
+        <div class="password">
+            <label for="password">Пароль (не менее 8 знаков):</label>
+            <input type="password" class="input-field" placeholder="Пароль (не менее 8 знаков)" id="password" minlength="5" maxlength="8" required/>
+        </div>
+
+        <div class="sex">
+            <fieldset class="s">Выберите пол:
+            <label for="мужской">
+            <input type="radio" name="sex"  value="мужской" id="men">Мужской</label>
+            <label for="женский">
+            <input type="radio" name="sex"  value="женский" id="women">Женский</label>
+            </fieldset>
+
+        </div><br>
+        <div class="checkbox">
+        <input type="checkbox" name="agreeTerms" id="agreeTerms" checked required>
+        <label for="agreeTerms" class="text">Нажимая кнопку "Отправить" Вы даёте свое согласие на обработку введенной персональной информации в соответствии с Федеральным Законом №152-ФЗ от 27.07.2006 "О персональных данных"</label>
+        <span class="error" id="termsError"></span>
+    </div>
+
+        <button type="submit" name="submitBtn" id="submitBtn" disabled >Отправить заявку</button>
+        </form>
+        </div>
+
+    <script>
+        const form = document.forms.myForm; //Получаем форму
+
+//Добавляем на неё обработчик события submit
+form.addEventListener('submit', function (evt) {
+  //Отменяем стандартное поведение
+    evt.preventDefault();
+
+//Проверяем данные пользователя
+});
+
+
+const inputFields = document.querySelectorAll('.input-field');
+
+inputFields.forEach(function (input) {
+
+input.addEventListener('focus',function(){
+input.style.outline = 'none';
+input.style.border='1px solid #00ff00';
+});
+input.addEventListener('blur', function () {
+ // Восстанавливаем стандартную границу при потере фокуса
+input.style.border = ''; // Сбрасываем стиль границы
+});
+});
+
+
+        // const form=document.forms.myForms;
+        const userNameInput=form.elements.username;
+        const emailInput=form.elements.email;
+        const agreeTermsCheckbox = form.elements.agreeTerms;
+
+        const userNameError = document.getElementById('usernameError');
+        const emailError = document.getElementById('emailError');
+        const termsError = document.getElementById('termsError');
+
+        form.addEventListener('submit', function(evt) {
+        evt.preventDefault();
+        let hasError = false;
+
+        userNameError.style.display = 'none';
+        emailError.style.display = 'none';
+        termsError.style.display = 'none';
+
+        if (userNameInput.value === '') {
+    userNameError.textContent = 'Введите имя пользователя.';
+    userNameError.style.display = 'block';
+    hasError = true;
+    }
+
+    if (validateEmail(emailInput.value) === false) {
+    emailError.textContent = 'Введите корректный email.';
+    emailError.style.display = 'block';
+    hasError = true;
+    }
+
+    if (agreeTermsCheckbox.checked === false) {
+    termsError.textContent = 'Необходимо согласие с условиями.';
+    termsError.style.display = 'block';
+    hasError = true;
+    }
+
+    if (hasError === false) {
+    alert('Форма успешно отправлена!');
+    }
+    });
+    function validateEmail(email) {
+    let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$/;
+    return regex.test(email);
+}
+
+document.getElementById('agreeTerms').addEventListener('change', function() {
+  // Получаем кнопку отправки и чекбокс
+    const submitBtn = document.getElementById('submitBtn');
+    const agreeTermsCheckbox = document.getElementById('agreeTerms');
+
+  // Разблокируем или блокируем кнопку в зависимости от состояния чекбокса
+submitBtn.disabled = !agreeTermsCheckbox.checked;
+});
+
+document.getElementById('agreeTerms').addEventListener('change',function(){
+const submitBtn=document.getElementById('submitBtn');
+const agteeTermsCheckbox=document.getElementById('agreeTerms');
+submitBtn.disabled=!agreeTermsCheckbox.checked;
+});
+</script> 
+</body>
+</html>

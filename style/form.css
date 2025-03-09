@@ -1,0 +1,57 @@
+.password{
+    margin: 20px;
+}
+.name{
+    margin: 20px;
+}
+.email{
+    margin: 20px;
+}
+.age{
+    margin: 20px;
+}
+.prof{
+    margin: 20px;
+    width: 250px;
+}
+button{
+    margin: 30px;
+    height:30px;
+}
+input{
+    width: 250px;
+    height: 20px;
+}
+
+#mars-once{
+    margin: 0 auto;
+    width: 400px;
+    
+    background-color: bisque;
+}
+select{
+    width: 260px;
+    height: 30px;
+}
+.s{
+height:100px ; 
+width: 120px;
+}
+.checkbox{
+    width: 300px;
+}
+.text{
+    font-size: 12px;
+    margin-left: 15px;
+}
+#agreeTerms {
+    left: 20px;
+    width: 15px;
+    height: 30px;
+    border: solid rgb(199, 89, 89);
+    border-width: 0 2px 2px 0;
+}
+.error {
+    color: red;
+    display: none;
+}
